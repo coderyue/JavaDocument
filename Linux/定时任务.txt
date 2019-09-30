@@ -1,0 +1,26 @@
+编辑定时任务  放上去
+vi /etc/crontab 
+退出保存
+systemctl enable crond
+systemctl start crond
+
+查看定时任务执行
+
+tail -f /var/log/cron
+
+查看定时任务列表
+crontab -l
+清除定时任务
+crontab -r
+
+*/1 * * * *  /home/test/test.sh >> /home/test/test.log
+
+crontab -e 创建当前用户的定时任务
+
+*/1 * * * * root /home/test/test.sh >> /home/test/test.log
+
+查看crontab 执行结果 service crond status
+
+check_mysql.sh
+
+*/1 * * * * root /etc/keepalived/mysqlcheck/check_mysql.sh >> /etc/keepalived/mysqlcheck/check_mysql.log

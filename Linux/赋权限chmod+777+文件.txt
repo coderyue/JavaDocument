@@ -1,0 +1,4 @@
+#chown -R mysql .
+#chgrp -R mysql .
+
+修改用户组和所有者， 前面修改 左边的    后面修改右边的
