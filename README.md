@@ -1,2 +1,2 @@
 # JavaDocument
-Java工具
+Java文档
