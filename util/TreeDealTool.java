@@ -12,6 +12,7 @@ import java.util.*;
  * @author yzx
  * @date 2019/9/25
  */
+@SuppressWarnings("all")
 public interface TreeDealTool <K, T extends TreeUtil> {
 
     /**
@@ -20,6 +21,9 @@ public interface TreeDealTool <K, T extends TreeUtil> {
      * @param keyword
      */
     default void findByKeyword(List<T> children, String keyword) {
+        if (children.isEmpty() || StringUtils.isEmpty(keyword)) {
+            return;
+        }
         int cnt = getTreeLayers(children, 2);
         for (int i = 0; i < cnt; i++) {
             handleTreeFindByKeyword(children, keyword);
@@ -67,7 +71,7 @@ public interface TreeDealTool <K, T extends TreeUtil> {
      * @param modelList 自定义根节点下面一层
      * @param deptTreeModelMap 父节点id和对应T集合
      */
-    default void handleDeptTree(List<T> modelList, Map<Integer, List<T>> deptTreeModelMap) {
+    default void handleDeptTree(List<T> modelList, Map<K, List<T>> deptTreeModelMap) {
         modelList.stream().filter(Objects::nonNull).peek(item -> item.setChildren(deptTreeModelMap.get(item.getId())))
                 .forEach(item -> {
                     if (item.getChildren().size() > 0) {
