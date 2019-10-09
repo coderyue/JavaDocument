@@ -11,14 +11,18 @@ import java.util.List;
  * @author yzx
  * @date 2019/9/25
  */
-public class TreeUtil <K> {
+public class TreeUtil <K, T extends TreeUtil> {
 
     private K id;
     private String name;
     private Integer type;
     private K parentId;
     private Integer sortNo;
-    private List<TreeUtil> children = new ArrayList<>();
+    private List<T> children = new ArrayList<>();
+
+    public TreeUtil() {
+        this.sortNo = Integer.MAX_VALUE;
+    }
 
     public K getId() {
         return id;
@@ -57,15 +61,18 @@ public class TreeUtil <K> {
     }
 
     public void setSortNo(Integer sortNo) {
-        this.sortNo = sortNo == null ? Integer.MAX_VALUE : sortNo;
+        this.sortNo = sortNo;
     }
 
-    public List<TreeUtil> getChildren() {
+    public List<T> getChildren() {
         return children;
     }
 
-    public void setChildren(List<TreeUtil> children) {
-        this.children = children;
+    public void setChildren(List<T> children) {
+        if (children == null) {
+            return;
+        }
+        this.children.addAll(children);
     }
 
 
