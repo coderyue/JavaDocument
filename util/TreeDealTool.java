@@ -3,6 +3,7 @@ package com.bonc.aocemp.utils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 树处理工具
@@ -67,6 +68,60 @@ public interface TreeDealTool <K, T extends TreeUtil> {
     }
 
     /**
+     * 往父节点上挂子节点
+     * @param parentList 父级list
+     * @param childList 子级list
+     */
+    default void addChildToParent(List<T> parentList, List<T> childList) {
+        addChildToParent(parentList, listToMap(childList));
+    }
+
+    /**
+     * 构建树
+     * 注： 这里默认没有父节点的记录parentId为null
+     * @param allModelList 所有model集合
+     */
+    default Map<K, List<T>> handleDeptTree(List<T> allModelList) {
+        Map<K, List<T>> kListMap = listToMap(allModelList);
+        handleDeptTree(kListMap.get(null), kListMap);
+        return kListMap;
+    }
+
+    /**
+     * 构建树
+     * @param allModelList 所有model集合
+     * @param rootNodeParentId 根节点的父级id
+     * @return
+     */
+    default Map<K, List<T>> handleDeptTreeWithRootParentId(List<T> allModelList, Object rootNodeParentId) {
+        Map<K, List<T>> kListMap = listToMap(allModelList);
+        handleDeptTree(kListMap.get(rootNodeParentId), kListMap);
+        return kListMap;
+    }
+
+    /**
+     * 构建树
+     * 注：这里默认没有父节点的节点的parentId为null
+     * @param allModelList 所有model集合
+     * @param rootModel 自定义根节点
+     */
+    default void handleDeptTree(List<T> allModelList, T rootModel) {
+        Map<K, List<T>> kListMap = handleDeptTree(allModelList);
+        rootModel.setChildren(kListMap.get(null));
+    }
+
+    /**
+     * 构建树
+     * @param allModelList 所有model集合
+     * @param rootModel 自定义根节点
+     * @param rootNodeParentId 根节点的父级id
+     */
+    default void handelDeptTree(List<T> allModelList, T rootModel, Object rootNodeParentId) {
+        Map<K, List<T>> kListMap = handleDeptTreeWithRootParentId(allModelList, rootNodeParentId);
+        rootModel.setChildren(kListMap.get(rootNodeParentId));
+    }
+
+    /**
      * 构建树
      * @param modelList 自定义根节点下面一层
      * @param deptTreeModelMap 父节点id和对应T集合
@@ -115,5 +170,26 @@ public interface TreeDealTool <K, T extends TreeUtil> {
         }
         return curNum;
     }
+
+    /**
+     * 对树进行排序并根据关键字查询
+     * @param treeModel
+     * @param keyword
+     */
+    default void sortAndFindByKeyword(T treeModel, String keyword) {
+        findByKeyword(treeModel.getChildren(), keyword);
+        sortTreeModel(treeModel);
+    }
+
+    /**
+     * model集合转换为map
+     * @param modelList
+     * @return
+     */
+    default Map<K, List<T>> listToMap(List<T> modelList) {
+        return modelList.stream().collect(Collectors.groupingBy(t -> (K) t.getParentId()));
+    }
+
+
 
 }
