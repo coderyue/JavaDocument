@@ -1,0 +1,53 @@
+MySQL
+	union和union all的区别是
+	union会自动压缩多个结果集合中的重复结果
+	union all则将所有的结果全部显示出来，不管是不是重复。
+	Union：对两个结果集进行并集操作，不包括重复行，同时进行默认规则的排序；
+	UNION在进行表链接后会筛选掉重复的记录，所以在表链接后会对所产生的结果集进行排序运算，删除重复的记录再返回结果。实际大部分应用中是不会产生重复的记录，最常见的是过程表与历史表UNION
+	union All：对两个结果集进行并集操作，包括重复行，不进行排序；
+	如果返回的两个结果集中有重复的数据，那么返回的结果集就会包含重复的数据了。
+	Intersect：对两个结果集进行交集操作，不包括重复行，同时进行默认规则的排序；
+	Minus：对两个结果集进行差操作，不包括重复行，同时进行默认规则的排序。
+	可以在最后一个结果集中指定Order by子句改变排序方式。
+	例如：
+	select employee_id,job_id from employees union select employee_id,job_id from job_history
+	以上将两个表的结果联合在一起。这两个例子会将两个select语句的结果中的重复值进行压缩，也就是结果的数据并不是两条结果的条数的和。如果希望即使重复的结果显示出来可以使用union all,例如：
+	2.在oracle的scott用户中有表emp select * from emp where deptno >= 20 union all select * from emp where deptno <= 30 这里的结果就有很多重复值了。
+	有关union和union all关键字需要注意的问题是：
+	union 和 union all都可以将多个结果集合并，而不仅仅是两个，你可以将多个结果集串起来。 使用union和union all必须保证各个select 集合的结果有相同个数的列，并且每个列的类型是一样的。
+		但列名则不一定需要相同，oracle会将第一个结果的列名作为结果集的列名。
+		例如下面是一个例子： select empno,ename from emp union select deptno,dname from dept 没有必要在每一个select结果集中使用order by子句来进行排序，
+		可以在最后使用一条order by来对整个结果进行排序。例如： select empno,ename from emp union select deptno,dname from dept
+		
+触发器:
+	触发器中涉及到表，如果表中的包含‘-’，那么保存会报错，在表的两边加上‘``’符号就好了
+	
+MySQL查询结果保留两位小数
+	1.四舍五入round(x,d)  x指要处理的数，d是指保留几位小数
+	Eg：查询select round(1123.26723,-1);   结果：1120
+	注：得注意的地方是，d可以是负数，这时是指定小数点左边的d位整数位为0,同时小数位均为0；
+	2. 格式化小数函数format(x,d)
+	Eg: select format(23456.789,2);  23,456.79  
+	注：format()函数会对小数部分进行四舍五入操作，整数部分从右向左每3位一个逗号进行格式化输出。
+	3. 截取函数truncate(x,d)
+	Eg: select truncate(23456.789,2);  23456.78  
+	注：truncate()函数会将小数部分2位以后的值直接舍去。
+	4. 类型转换函数convert(expr,type)
+	Eg: select convert(23456.789,decimal(10,2));  23456.79  
+	注：convert()函数会对小数部分进行四舍五入操作，解释一下decimal(10,2),它表示最终得到的结果整数部分位数加上小数部分位数小于等于10，小数部分位数2。
+
+字符串切割
+	substring_index()
+
+
+
+
+
+
+
+
+
+
+
+
+		

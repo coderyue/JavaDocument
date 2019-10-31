@@ -1,0 +1,47 @@
+CREATE TRIGGER `tr_insert_userinfo` AFTER INSERT ON `userinfo` FOR EACH ROW BEGIN 
+	IF @disable_trigger IS NULL THEN
+    -- 设置禁用触发器标志.
+    SET @disable_trigger = 1;
+    -- 插入目标表
+    INSERT INTO
+      portal_portlet_config_instance(`tenant_id`, `PROP_VALUE`, `PORTAL_PORTLET_INSTANCE_ID`, `PORTAL_PORTLET_CONFIG_ID`)
+    VALUES
+      ('tenant_system', CONCAT('HOME_PAGE_', new.`LOGIN_ID`, ':https://xqlg9.ap.pg.com:8443/dist/#/energy-analysis'), 5, 2);
+    -- 恢复禁用触发器标志.
+    SET @disable_trigger = NULL;
+  END IF;
+END;
+
+CREATE TRIGGER `tr_delete_userinfo` AFTER DELETE ON `userinfo` FOR EACH ROW BEGIN 
+	IF @disable_trigger IS NULL THEN
+    -- 设置禁用触发器标志.
+    SET @disable_trigger = 1;
+    -- 从目标表删除
+    delete from portal_portlet_config_instance where instr(`PROP_VALUE`, old.`LOGIN_ID`) > 0;
+    -- 恢复禁用触发器标志.
+    SET @disable_trigger = NULL;
+  END IF;
+END;
+
+
+
+页面赋值
+
+$("a[data-id='index']").attr("src","https://xqlg9.ap.pg.com:8443/dist/#/energy-analysis");
+
+刷新函数
+function refresh(){
+         var t = $('J_menuTab[data-id="index"]'),
+         e = t.attr("src"),
+         a = layer.load();
+         t.attr("src", e).load(function() {
+             layer.close(a)
+         })
+    }
+
+
+
+
+
+
+
