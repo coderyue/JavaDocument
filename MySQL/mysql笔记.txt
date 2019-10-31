@@ -39,6 +39,15 @@ MySQL查询结果保留两位小数
 字符串切割
 	substring_index()
 
+出现锁表解决
+	select * from information_schema.innodb_trx
+	当前出现的锁
+	select * from information_schema.innodb_locks
+	锁等待的对应关系
+	select * from information_schema.innodb_lock_waits  
+	杀死进程
+	kill id
+
 
 
 
