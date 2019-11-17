@@ -1,0 +1,70 @@
+  932  ll
+  933  clear
+  934  ll
+  935  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value20191111.sql
+  936  ll
+  937  du -sm *
+  938  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform --ignore-table=bemdplatform.t_realtime_value --ignore-table=bemdplatform.t_realtime_value_history > /opt/databasebackup/bemdplatform20191112.sql -v
+  939  cd /opt/databasebackup/
+  940  clear
+  941  ll
+  942  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value20191112.sql
+  943  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value_history --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value20191112.sql -v 
+  944  clear
+  945  ll
+  946  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value_history --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value_hisotry20191112.sql -v 
+  947  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value20191112.sql -v
+  948  clear
+  949  ll
+  950  du -sm *
+  951  ssh root@192.168.12.160
+  952  history|grep mysqldump
+  953  cd /opt/databasebackup/
+  954  ll
+  955  clear
+  956  ll
+  957    /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform --ignore-table=bemdplatform.t_realtime_value --ignore-table=bemdplatform.t_realtime_value_history > /opt/databasebackup/bemdplatform20191114.sql -v
+  958   /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value_history --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_valuehistory_20191114.sql -v 
+  959   /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value_20191114.sql -v 
+  960   /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p energyportal > /opt/databasebackup/energyportal20191114.sql -v 
+  961  clear
+  962  ssh root@192.168.12.160
+  963  ./mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform --ignore-table=bemdplatform.t_realtime_value --ignore-table=bemdplatform.t_realtime_value_history > /opt/databasebackup/bemdplatform20191114v3.sql
+  964  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform > /opt/databasebackup/bemdplatform20191114v3.sql -v 
+  965  clear
+  966  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value20191114v2.sql -v
+  967  cd /opt/databasebackup/
+  968  ll
+  969  scp bemdplatform20191114v3.sql  root@192.168.12.161:/opt
+  970  ll
+  971  clear
+  972  ll
+  973  mkdir other
+  974  mv bemdplatform* other/
+  975  ll
+  976  mv energyportal* other/
+  977  ll
+  978  clear
+  979  ll
+  980  mv t* other/
+  981  ll
+  982  clear
+  983  ll
+  984  ip a
+  985  clear
+  986  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_hourly_statistic --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_hourly_statistic.sql -v
+  987  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= CURRENT_DATE()" > /opt/databasebackup/t_realtime_value.sql -v
+  988  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/t_daily_first_end_value.sql -v
+  989   /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/t_daily_statistic.sql -v
+  990  ll
+  991  du -sm *
+  992  clear
+  993  ll
+  994  scp t* root@192.168.12.161:/opt 
+  995  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/t_daily_statistic.sql -v
+  996  ll
+  997  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/t_daily_statisticv3.sql -v
+  998  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_hourly_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/readata.sql -v
+  999  clear
+ 1000  /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p  -t bemdplatform t_realtime_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_hourly_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/readata.sql -v
+ 1001  history

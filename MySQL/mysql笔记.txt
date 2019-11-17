@@ -48,6 +48,58 @@ MySQL查询结果保留两位小数
 	杀死进程
 	kill id
 
+sql行转列
+	eg：
+        SELECT r.dept_name, r.dept_order_no, r.device_name, r.unit_name,
+        sum(case r.type_id when 1015 then round(startValue, 2) end) startDataValue,
+        sum(case r.type_id when 1015 then round(endValue, 2) end) endDataValue,
+        sum(case r.type_id when 1015 then round(endValue - startValue, 2) end) dataValueIncr,
+        sum(case r.type_id when 1016 then round(endValue - startValue, 2) end) peakValueIncr,
+        sum(case r.type_id when 1017 then round(endValue - startValue, 2) end) valleyValueIncr,
+        sum(case r.type_id when 1018 then round(endValue - startValue, 2) end) flatValueIncr
+        FROM (
+            SELECT t.dept_name, t.dept_order_no, t.device_name, t.type_id, ifnull(min(t.data_value), 0) startValue, ifnull(max(t.data_value), 0) endValue, t.unit_name
+            FROM (
+                SELECT t1.dept_name, t1.dept_order_no, t1.device_name, t1.point_id, t2.data_value, t2.data_time, t1.type_id, t1.unit_name FROM (
+                SELECT dept.dept_name, dept.dept_order_no, device.device_name, tp.point_id, tp.type_id, u.unit_name FROM t_dept dept, t_device device, t_datapoint tp, t_unit u
+                WHERE dept.dept_id = device.dept_id AND device.device_id = tp.device_id AND tp.unit_id = u.unit_id
+                AND dept.dept_type = 1 AND tp.type_id in (1015, 1016, 1017, 1018)) t1
+                LEFT JOIN (SELECT point_id, data_value, data_time FROM t_daily_first_end_value) t2
+                ON t1.point_id = t2.point_id WHERE t2.data_time &gt;= concat(#{startTime}, ' 00:00:00') AND t2.data_time &lt;= concat(#{startTime}, ' 23:59:59')
+                UNION ALL
+                SELECT t1.dept_name, t1.dept_order_no, t1.device_name, t1.point_id, t2.data_value, t2.data_time, t1.type_id, t1.unit_name FROM (
+                SELECT dept.dept_name, dept.dept_order_no, device.device_name, tp.point_id, tp.type_id, u.unit_name FROM t_dept dept, t_device device, t_datapoint tp, t_unit u
+                WHERE dept.dept_id = device.dept_id AND device.device_id = tp.device_id AND tp.unit_id = u.unit_id
+                AND dept.dept_type = 1 AND tp.type_id in (1015, 1016, 1017, 1018)) t1
+                LEFT JOIN (SELECT point_id, data_value, data_time FROM t_daily_first_end_value) t2
+                ON t1.point_id = t2.point_id WHERE t2.data_time &gt;= concat(#{endTime}, ' 00:00:00') AND t2.data_time &lt;= concat(#{endTime}, ' 23:59:59')
+            ) t GROUP BY t.dept_name, t.dept_order_no, t.device_name, t.type_id, t.unit_name
+        ) r GROUP BY r.dept_name, r.dept_order_no, r.device_name, r.unit_name ORDER BY r.dept_order_no, r.device_name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

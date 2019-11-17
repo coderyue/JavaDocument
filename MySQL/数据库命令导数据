@@ -1,0 +1,36 @@
+/home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p  -t bemdplatform t_realtime_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -3 HOUR)"  t_hourly_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -3 HOUR)"  t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/readata.sql -v
+
+
+xian delete hou daoshu
+/home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p  bemdplatform t_realtime_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_hourly_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/readata.sql -v
+
+
+root 
+
+// 传文件
+scp readata.sql root@192.168.12.161:/opt
+
+// 连接服务器
+ssh root@192.168.12.161
+root 
+
+ /opt/zxyy/software/mysql-5.7.26-el7-x86_64/bin//mysql -uroot -p -P23306 -h 192.168.12.161
+ 
+ 
+mysql> use bemdplatform;
+
+//导入数据
+source /opt/readata.sql ;
+
+
+
+
+
+先把下面的删了，在重新导出来，，，，161上和内网上的都是同一个目录
+/opt/databasebackup/readata.sql
+
+
+小时表21点的没有  
+
+
+
