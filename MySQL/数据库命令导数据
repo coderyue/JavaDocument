@@ -4,6 +4,8 @@
 xian delete hou daoshu
 /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p  bemdplatform t_realtime_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_hourly_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/readata.sql -v
 
+有-t 不会删表重新建表，没有 -t 会先把删除，在创建表再插入数据
+
 
 root 
 
@@ -23,14 +25,55 @@ mysql> use bemdplatform;
 source /opt/readata.sql ;
 
 
-
-
-
 先把下面的删了，在重新导出来，，，，161上和内网上的都是同一个目录
 /opt/databasebackup/readata.sql
 
 
-小时表21点的没有  
+
+
+
+ 1 登录172.16.181.161 root/zhongxin201907~!@
+ 2.导出数据带结构与数据
+   /home/zxyy/software/mysql-5.7.26-el7-x86_64/bin/mysqldump -uroot -p -h172.16.181.161 -P23306 -p bemdplatform t_realtime_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_hourly_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_first_end_value --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)"  t_daily_statistic --where=" data_time >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 day)" > /opt/databasebackup/readata`date +'%Y-%m-%d-%H.%M'`.sql -v
+  3.复制到192.168.12.161上
+  scp readata2019-11-22-15.38.sql root@192.168.12.161:/root/databasedir/
+  4通过172.16.181.161 跳转到192.168.12.161
+  ssh root@192.168.12.161 密码root
+  进入数据库
+  /opt/zxyy/software/mysql-5.7.26-el7-x86_64/bin//mysql -uroot -p -P23306 -h 192.168.12.161
+  use  bemdplatform;
+  source /root/databasedir/readata2019-11-22-15-38.sql;
+  完成
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,23 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+解除主从复制关系
+	stop slave
+	reset slave all
+	再用
+	show slave status查看发现主从关系已彻底取消
+	https://www.cnblogs.com/musen/p/11162783.html
+
+
