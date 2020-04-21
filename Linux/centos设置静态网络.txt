@@ -1,0 +1,33 @@
+
+配置的机器版本为centos7
+
+编辑网络配置文件(配置静态ip)
+
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+
+	1. 修改 BOOTPROTO 的值为   static
+
+	2. 修改 ONBOOT 的值为	yes
+	
+	3. 在最下面添加以下内容
+
+		IPADDR=192.168.1.101
+		GATEWAY=192.168.1.2
+		NETMASK=255.255.255.0
+		DNS=192.168.255.1
+
+		其中dns 配置在  /etc/resolv.conf  配置文件中进行设置dns配置
+			配置如下
+			nameserver 100.64.0.3
+	4. 重启network服务
+		centos7中
+			systemctl restart network  (重启网络服务)
+			systemctl start network   （启动网络服务）
+			systemctl stop network    （停止网络服务）
+		centos6中
+			service network restart    (重启网络服务)
+			service network start      (启动网络服务)
+			service network stop      （停止网络服务）
+
+
+
