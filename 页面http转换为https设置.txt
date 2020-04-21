@@ -1,0 +1,7 @@
+https://www.cnblogs.com/zhidong123/p/9370427.html
+
+JSP页面 <head></head>标签中可以这样设置
+<%response.setHeader("Content-Security-Policy","upgrade-insecure-requests");%>
+
+https 页面有一些http的请求，可以在<head></head>中设置
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
